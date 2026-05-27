@@ -67,9 +67,6 @@ waitingStart: "ожидание запуска. нажмите кнопку по
   errSynthInit: "Ошибка инициализации синтезатора.",
   errFirebaseInit: "Ошибка инициализации Firebase (config.js).",
 
-// ошибки валидации формы
-  errBadFormat: "попробуйте еще раз ввести годы в формате гггг",
-  errDeathBeforeBirth: "год смерти не может быть раньше года рождения",
   errWriteFailed: "Ошибка записи. Проверьте соединение/Rules.",
 // чтение из базы
   dbReadError: "Ошибка чтения из базы",
@@ -116,9 +113,6 @@ contacts: "the project was created by " +
   errSynthInit: "Synth initialization error.",
   errFirebaseInit: "Firebase initialization error (config.js).",
 
-// ошибки валидации формы
-  errBadFormat: "error: format must be YYYY",
-  errDeathBeforeBirth: "error: death year is earlier than birth year.",
   errWriteFailed: "Write error. Check connection/Rules.",
 // чтение из базы 
   dbReadError: "Database read error",
@@ -214,7 +208,6 @@ appId: "1:325460884781:web:51595383b9f63821f067a4",
 measurementId: "G-9PNYN3K9YY"
      }
 };
-
 
 
 

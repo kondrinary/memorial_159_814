@@ -1,4 +1,4 @@
-// main.js — UI + старт, подписка, формат/валидация, добавление, тест-записи
+// main.js — UI + старт, подписка, ручной ввод, добавление, тест-записи
 (function(){
   // ===== DOM =====
   const startBtn     = document.getElementById('startBtn');
@@ -80,38 +80,12 @@
     const contactsBar = document.getElementById("contactsBar");
     if (contactsBar) contactsBar.innerHTML = L.contacts;
 
-    // inline-кнопка «что сейчас играет» если создана — локализуем
-    const nowInline = document.getElementById('nowPlayInline');
-    if (nowInline) nowInline.textContent = L.nowPlayingBtn || 'что сейчас звучит?';
-
     // правое «ухо» — языковая кнопка (ENG/РУС)
     const dbRight = document.getElementById('dbRight');
     if (dbRight) dbRight.textContent = (CURRENT_LANG === 'ru' ? 'ENG' : 'РУС');
   }
   // делаем доступной из внешних блоков
   window.applyTexts = applyTexts;
-
-  // ===== Форматирование ввода "ДД.ММ.ГГГГ" =====
-  function formatDateInput(el){
-    let v = el.value.replace(/\D/g,'').slice(0,8);
-    let out = '';
-    if (v.length > 0) out += v.slice(0,2);
-    if (v.length >= 3) out += '.' + v.slice(2,4);
-    if (v.length >= 5) out += '.' + v.slice(4,8);
-    el.value = out;
-  }
-  birthInput?.addEventListener('input', ()=>formatDateInput(birthInput));
-  deathInput?.addEventListener('input', ()=>formatDateInput(deathInput));
-
-  // ===== Валидация "ДД.ММ.ГГГГ" =====
-  function parseValidDate(str){
-    const m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(str);
-    if (!m) return null;
-    const [_, dd, mm, yyyy] = m;
-    const d = new Date(+yyyy, +mm - 1, +dd);
-    if (d.getFullYear() !== +yyyy || d.getMonth() !== (+mm - 1) || d.getDate() !== +dd) return null;
-    return d;
-  }
 
   // ===== стартовые тексты =====
   clearError(); clearOk(); applyTexts(); setDebug(tr('waitingStart'));
@@ -215,22 +189,7 @@
 
     clearError(); clearOk();
 
-    const bDate = parseValidDate(bStr);
-    const dDate = parseValidDate(dStr);
-
-    if (!bDate || !dDate){
-      showError(tr('errBadFormat'));
-      return;
-    }
-    if (dDate.getTime() < bDate.getTime()){
-      showError(tr('errDeathBeforeBirth'));
-      return;
-    }
-
-    const bDigits = bStr.replace(/\D/g,'');
-    const dDigits = dStr.replace(/\D/g,'');
-
-    const ok = await Data.pushDate(bDigits, dDigits);
+    const ok = await Data.pushDate(bStr, dStr);
     if (ok){
       birthInput.value = '';
       deathInput.value = '';
@@ -248,10 +207,10 @@
 
   // ====== КНОПКА «Тестовая запись» ======
   const SEED_PRESETS = [
-    { b:'01011990', d:'02022000' },
-    { b:'15071985', d:'22092010' },
-    { b:'31121970', d:'01012000' },
-    { b:'03031999', d:'04042004' }
+    { b:'1990', d:'2000' },
+    { b:'1985', d:'2010' },
+    { b:'1970', d:'2000' },
+    { b:'1999', d:'2004' }
   ];
   let seedIndex = 0;
 
@@ -384,36 +343,6 @@ if (err) err.hidden = true;
   window.addEventListener('load', syncDbLeftVisibility);
 })();
 
-/* === Inline «что сейчас играет» в ряд с формами (кнопку создаём после addBtn) === */
-(function(){
-  const addBtn = document.getElementById('addBtn');
-  const L = (typeof TEXTS === 'object' && TEXTS[CURRENT_LANG]) || (TEXTS && TEXTS.ru) || {};
-  if (addBtn && !document.getElementById('nowPlayInline')){
-    const btn = document.createElement('button');
-    btn.id = 'nowPlayInline';
-    btn.type = 'button';
-    btn.className = addBtn.className || '';
-    btn.textContent = L.nowPlayingBtn || 'что сейчас звучит?';
-    addBtn.insertAdjacentElement('afterend', btn);
-
-    btn.addEventListener('click', ()=>{
-      const pane   = document.getElementById('right');
-      const stream = document.getElementById('stream');
-      if (!pane || !stream) return;
-      const el = stream.querySelector('.digit.active, .active');
-      if (!el) return;
-      const paneRect = pane.getBoundingClientRect();
-      const elRect   = el.getBoundingClientRect();
-      const topInPane = elRect.top - paneRect.top + pane.scrollTop;
-      const targetTop = Math.max(0, topInPane - (pane.clientHeight - el.clientHeight)/2);
-      pane.scrollTo({ top: targetTop, behavior: 'smooth' });
-    });
-
-    // после появления кнопки — пересчитать ширину баров
-    window.recalcBarsWidth && window.recalcBarsWidth();
-  }
-})();
-
 /* === Автоприлипание к НИЗУ вертикального контейнера #right (пока пользователь не скроллит) === */
 (function(){
   const pane   = document.getElementById('right');
@@ -537,11 +466,11 @@ if (contactsCard) intro.insertAdjacentElement('afterend', contactsCard);
   // а в обычном случае — дождаться события старта
   document.addEventListener('app-started', placeBetween);
 
-  // Подгон ширины: от левого края birth до правого края nowPlayInline (или addBtn)
+  // Подгон ширины: от левого края birth до правого края addBtn
   const pane = document.querySelector('.left-inner');
   function applyBarsWidth(){
     const leftEl   = document.getElementById('birthInput');
-    const rightEl  = document.getElementById('nowPlayInline') || document.getElementById('addBtn');
+    const rightEl  = document.getElementById('addBtn');
     const col1Ref  = document.querySelector('.left-inner .card'); // начало левой колонки
     if (!pane || !leftEl || !rightEl || !col1Ref) return;
 
@@ -631,4 +560,3 @@ if (contactsCard) intro.insertAdjacentElement('afterend', contactsCard);
   // на всякий случай — наружу
   window.applyResponsiveUIScale = applyScale;
 })();
-
