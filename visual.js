@@ -58,11 +58,11 @@ function digitToFreq(d){
   return FREQ_MIN + d * step;
 }
 
-// === ОДИН ЭЛЕМЕНТ (пара дат) -> фрагмент и массив цифр (обновлено)
+// === ОДИН ЭЛЕМЕНТ (пара годов) -> фрагмент и массив цифр
 function renderPairToFragment(item){
-  const bStr = item.birth.slice(0,2)+'.'+item.birth.slice(2,4)+'.'+item.birth.slice(4);
-  const dStr = item.death.slice(0,2)+'.'+item.death.slice(2,4)+'.'+item.death.slice(4);
-  const text = `${bStr}.${dStr}.`;
+  const bStr = String(item.birth || '').slice(0,4);
+  const dStr = String(item.death || '').slice(0,4);
+  const text = `${bStr}-${dStr}`;
 
   const frag  = document.createDocumentFragment();
   const spans = [];
@@ -88,7 +88,7 @@ function renderPairToFragment(item){
     frag.appendChild(document.createElement('br'));
   }
 
-  const digitsOnly = (item.birth + item.death).split('').map(Number);
+  const digitsOnly = (bStr + dStr).split('').map(Number);
   return { frag, spans, text, digitsOnly };
 }
 

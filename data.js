@@ -33,7 +33,7 @@
     }
   };
 
-  // ----- push date -----
+  // ----- push year pair -----
   Data.pushDate = async function(bDigits, dDigits){
     if (!ready && !Data.init()) return false;
     try {

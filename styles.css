@@ -272,8 +272,7 @@ button:focus-visible{
 }
 
 /* кнопки в строке формы — одинаковые габариты */
-#addBtn,
-#nowPlayInline{
+#addBtn{
   flex:0 0 auto;
   height:var(--btn-h);
   padding:0 var(--btn-pad-x);
@@ -515,5 +514,4 @@ html.app-started .card--contacts{
   white-space: normal;
   word-break: break-word;
 }
-
 

@@ -41,11 +41,11 @@ const TEXTS = {
   ru: {
     addBtn: "запомнить",
     startBtn: "подключиться",
-    birthInput: "дата рождения (дд.мм.гггг)",
-    deathInput: "дата смерти (дд.мм.гггг)",
+    birthInput: "год рождения (гггг)",
+    deathInput: "год смерти (гггг)",
     projectTitle: "MEMORIAL",
-    introDesc: "Это цифровой мемориал - сайт с базой данных, в которой хранятся даты рождения и смерти разных людей. На сайте любой пользователь может ввести даты и они станут частью общей \"партитуры\", в которой каждая цифра превращается в звук. И музыка памяти звучит циклично-бесконечно.\n\nОбычно, ритуалы привязаны к месту: в храме мы ставим свечку за упокой, а к памятнику возлагаем цветы. Но цифровой мир сегодня - стал полноправным пространством жизни человека. Мы привыкли к облачному хранению артефактов своей жизни: собираем в метавселенных данные о прошлом, воспоминания и мысли. Но так же, метапространство может стать местом для \"вечной памяти\" потому, что само по себе уже обладает характеристикой вечного. Вечное место для вечной памяти.",
-    playDesc: "Вы можете ввести даты рождения-смерти любого человека, память которого хотите почтить и сохранить. Даты добавятся в базу данных, соединятся с другими датами и станут частью общей музыкальной партитуры вечной памяти.\n\nКаждая из 16\u00A0цифр превращается в ноту — и начинает звучать наравне со всеми, продолжая поток. Цифровой мемориал обладает собственным микротональным музыкальным строем, который не похож на земную музыку. Для мемориала была создана новая октава, состоящая не из 13\u00A0нот, как классическая октава, а из 10\u00A0нот. Каждой цифре [ от\u00A00 до\u00A09 ] соответствует своя высота звучания — своя частота. Мемориал переводит цифры дат рождения и смерти людей — в звуковое поле, давая им длительность и физическую плотность. Это памятник, который позволяет нам \"побыть внутри памяти\", обнаруживая тело памяти через звук и вступая с памятью в близкий честный контакт.",
+    introDesc: "Это цифровой мемориал - сайт с базой данных, в которой хранятся годы рождения и смерти разных людей. На сайте любой пользователь может ввести годы и они станут частью общей \"партитуры\", в которой каждая цифра превращается в звук. И музыка памяти звучит циклично-бесконечно.\n\nОбычно, ритуалы привязаны к месту: в храме мы ставим свечку за упокой, а к памятнику возлагаем цветы. Но цифровой мир сегодня - стал полноправным пространством жизни человека. Мы привыкли к облачному хранению артефактов своей жизни: собираем в метавселенных данные о прошлом, воспоминания и мысли. Но так же, метапространство может стать местом для \"вечной памяти\" потому, что само по себе уже обладает характеристикой вечного. Вечное место для вечной памяти.",
+    playDesc: "Вы можете ввести годы рождения-смерти любого человека, память которого хотите почтить и сохранить. Годы добавятся в базу данных, соединятся с другими годами и станут частью общей музыкальной партитуры вечной памяти.\n\nКаждая из 8\u00A0цифр превращается в ноту — и начинает звучать наравне со всеми, продолжая поток. Цифровой мемориал обладает собственным микротональным музыкальным строем, который не похож на земную музыку. Для мемориала была создана новая октава, состоящая не из 13\u00A0нот, как классическая октава, а из 10\u00A0нот. Каждой цифре [ от\u00A00 до\u00A09 ] соответствует своя высота звучания — своя частота. Мемориал переводит цифры годов рождения и смерти людей — в звуковое поле, давая им длительность и физическую плотность. Это памятник, который позволяет нам \"побыть внутри памяти\", обнаруживая тело памяти через звук и вступая с памятью в близкий честный контакт.",
    
    
  contacts: "проект создан студией цифрового искусства " +
@@ -60,16 +60,16 @@ const TEXTS = {
 waitingStart: "ожидание запуска. нажмите кнопку подключиться",
   statusPreparingSound: "готовлю звук",
   statusSoundReady: "звук готов",
-  statusSubscribing: "подписываюсь на базу данных с датами",
-  statusNoData: "Нет данных для проигрывания. Добавьте дату ниже.",
+  statusSubscribing: "подписываюсь на базу данных с годами",
+  statusNoData: "Нет данных для проигрывания. Добавьте годы ниже.",
   errToneMissing: "Tone.js не загрузился. Проверьте интернет/скрипты.",
   errAudioBlocked: "ваш браузер заблокировал аудио. кликните ещё раз или разрешите звук",
   errSynthInit: "Ошибка инициализации синтезатора.",
   errFirebaseInit: "Ошибка инициализации Firebase (config.js).",
 
 // ошибки валидации формы
-  errBadFormat: "попробуйте еще раз ввести даты в верном формате",
-  errDeathBeforeBirth: "дпопробуйте еще раз ввести даты в верном формате",
+  errBadFormat: "попробуйте еще раз ввести годы в формате гггг",
+  errDeathBeforeBirth: "год смерти не может быть раньше года рождения",
   errWriteFailed: "Ошибка записи. Проверьте соединение/Rules.",
 // чтение из базы
   dbReadError: "Ошибка чтения из базы",
@@ -82,8 +82,7 @@ waitingStart: "ожидание запуска. нажмите кнопку по
   nowPlaying: "сейчас звучит ",
   hz: "Гц",
   idxLabel: "индекс ",
-  dbCount: "количество дат: {n}",
-  nowPlayingBtn: "кто сейчас звучит?",
+  dbCount: "количество записей: {n}",
 
 // «успех-бар» (белый текст)
   okBar: "ваша запись добавлена в память цифрового мемориала"
@@ -92,11 +91,11 @@ waitingStart: "ожидание запуска. нажмите кнопку по
   en: {
 addBtn: "remember",
 startBtn: "connect",
-birthInput: "date of birth (dd.mm.yyyy)",
-deathInput: "date of death (dd.mm.yyyy)",
+birthInput: "year of birth (yyyy)",
+deathInput: "year of death (yyyy)",
 projectTitle: "MEMORIAL",
-introDesc: "This is a digital memorial — a website with a database that stores dates of birth and death of different people. On the site, any user can enter dates and they will become part of a common \"score\" in which each digit turns into a sound. And the music of memory plays cyclically, endlessly.\n\nUsually, rituals are tied to a place: in a church we light a candle for the repose, and at a monument we lay flowers. But today the digital world has become a full-fledged space of human life. We are used to storing the artefacts of our lives in the cloud: we collect data about the past, memories and thoughts in metaverses. Likewise, metaspace can become a place for \"eternal memory\" because it already possesses the characteristic of the eternal. A permanent place for permanent memory.",
-playDesc: "You can enter the birth–death dates of any person whose memory you want to honor and preserve. The dates will be added to the database, joined with other dates, and become part of the shared musical score of eternal memory.\n\nEach of the 16\u00A0digits becomes a note — and begins to sound on an equal footing with the rest, continuing the flow. The digital memorial has its own microtonal musical system that does not resemble earthly music. A new octave was created for the memorial, consisting not of 13\u00A0notes like the classical octave, but of 10\u00A0notes. Each digit [ from\u00A00 to\u00A09 ] corresponds to its own pitch — its own frequency. The memorial translates the digits of the dates of birth and death of people into a sonic field, giving them duration and physical density. It is a monument that allows us to \"be inside memory\", discovering the body of memory through sound and entering into a close, honest contact with memory. Not an impulsive contact, but a prolonged contact-presence.",
+introDesc: "This is a digital memorial — a website with a database that stores years of birth and death of different people. On the site, any user can enter years and they will become part of a common \"score\" in which each digit turns into a sound. And the music of memory plays cyclically, endlessly.\n\nUsually, rituals are tied to a place: in a church we light a candle for the repose, and at a monument we lay flowers. But today the digital world has become a full-fledged space of human life. We are used to storing the artefacts of our lives in the cloud: we collect data about the past, memories and thoughts in metaverses. Likewise, metaspace can become a place for \"eternal memory\" because it already possesses the characteristic of the eternal. A permanent place for permanent memory.",
+playDesc: "You can enter the birth–death years of any person whose memory you want to honor and preserve. The years will be added to the database, joined with other years, and become part of the shared musical score of eternal memory.\n\nEach of the 8\u00A0digits becomes a note — and begins to sound on an equal footing with the rest, continuing the flow. The digital memorial has its own microtonal musical system that does not resemble earthly music. A new octave was created for the memorial, consisting not of 13\u00A0notes like the classical octave, but of 10\u00A0notes. Each digit [ from\u00A00 to\u00A09 ] corresponds to its own pitch — its own frequency. The memorial translates the digits of the birth and death years of people into a sonic field, giving them duration and physical density. It is a monument that allows us to \"be inside memory\", discovering the body of memory through sound and entering into a close, honest contact with memory. Not an impulsive contact, but a prolonged contact-presence.",
    
 contacts: "the project was created by " +
     "<a class=\"u-link\" href=\"" + studioUrl + "\" target=\"_blank\" rel=\"noopener\">" + studioNameEn + "</a>" +
@@ -111,15 +110,15 @@ contacts: "the project was created by " +
   statusPreparingSound: "Preparing sound…",
   statusSoundReady: "Sound is ready.",
   statusSubscribing: "subscribing to database",
-  statusNoData: "No data to play. Please add a date below.",
+  statusNoData: "No data to play. Please add years below.",
   errToneMissing: "Tone.js did not load. Check internet/scripts.",
   errAudioBlocked: "Audio was blocked by the browser. Click again or allow sound.",
   errSynthInit: "Synth initialization error.",
   errFirebaseInit: "Firebase initialization error (config.js).",
 
 // ошибки валидации формы
-  errBadFormat: "error: format must be DD.MM.YYYY",
-  errDeathBeforeBirth: "error: death date is earlier than birth date.",
+  errBadFormat: "error: format must be YYYY",
+  errDeathBeforeBirth: "error: death year is earlier than birth year.",
   errWriteFailed: "Write error. Check connection/Rules.",
 // чтение из базы 
   dbReadError: "Database read error",
@@ -133,8 +132,7 @@ contacts: "the project was created by " +
   nowPlaying: "now playing",
   hz: "Hz",
   idxLabel: "idx",
-  dbCount: "dates in database: {n}",
-nowPlayingBtn: "whо is sounding now?",
+  dbCount: "records in database: {n}",
 
 
 // «успех-бар» (белый текст)
@@ -206,19 +204,16 @@ window.AppConfig = {
 
   // Firebase Console Config (замени на свой)
   firebaseConfig: {
-apiKey: "AIzaSyB-ODgGoepYs49fnsOlEeueMiYNxxr820o",
-authDomain: "memorial-b26b7.firebaseapp.com",
-databaseURL: "https://memorial-b26b7-default-rtdb.europe-west1.firebasedatabase.app",
-projectId: "memorial-b26b7",
-storageBucket: "memorial-b26b7.firebasestorage.app",
-messagingSenderId: "299345259712",
-appId: "1:299345259712:web:2bcff946a4716499c35125",
-measurementId: "G-0CL5TQ5NCV"
+apiKey: "AIzaSyCKe-7cKGw2rNPV5hngzN7Y4kHjqOOOJoY",
+authDomain: "memorial-159-814.firebaseapp.com",
+databaseURL: "https://memorial-159-814-default-rtdb.europe-west1.firebasedatabase.app",
+projectId: "memorial-159-814",
+storageBucket: "memorial-159-814.firebasestorage.app",
+messagingSenderId: "325460884781",
+appId: "1:325460884781:web:51595383b9f63821f067a4",
+measurementId: "G-9PNYN3K9YY"
      }
 };
-
-
-
 
 
 
